@@ -1,9 +1,9 @@
 "use client";
 
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Image from "next/image";
 
-import { ProjectInterface, SessionInterface } from "@/common.types";
+import { FormState, ProjectInterface, SessionInterface } from "@/common.types";
 import { categoryFilters } from "@/constants";
 import FormField from "./FormField";
 import CustomMenu from "./CustomMenu";
@@ -16,20 +16,23 @@ type Props = {
 };
 
 const ProjectForm = ({ type, session, project }: Props) => {
-  const handleFormSubmit = (e: FormEvent) => {};
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [form, setForm] = useState<FormState>({
+    title: project?.title || "",
+    description: project?.description || "",
+    image: project?.image || "",
+    liveSiteUrl: project?.liveSiteUrl || "",
+    githubUrl: project?.githubUrl || "",
+    category: project?.category || "",
+  });
+
+  const handleStateChange = (fieldName: string, value: string) => {
+    setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
+  };
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {};
 
-  const handleStateChange = (fieldName: string, value: string) => {};
-
-  const form = {
-    image: "",
-    title: "",
-    description: "",
-    liveSiteUrl: "",
-    githubUrl: "",
-    category: "",
-  };
+  const handleFormSubmit = (e: FormEvent) => {};
 
   return (
     <form onSubmit={handleFormSubmit} className="flexStart form">
