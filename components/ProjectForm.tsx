@@ -2,12 +2,14 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { FormState, ProjectInterface, SessionInterface } from "@/common.types";
 import { categoryFilters } from "@/constants";
 import FormField from "./FormField";
 import CustomMenu from "./CustomMenu";
 import Button from "./Button";
+import { createNewProject, fetchToken, updateProject } from "@/lib/actions";
 
 type Props = {
   type: string;
@@ -25,6 +27,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
     githubUrl: project?.githubUrl || "",
     category: project?.category || "",
   });
+  const router = useRouter();
 
   const handleStateChange = (fieldName: string, value: string) => {
     setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
@@ -52,7 +55,35 @@ const ProjectForm = ({ type, session, project }: Props) => {
     };
   };
 
-  const handleFormSubmit = (e: FormEvent) => {};
+  const handleFormSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    setSubmitting(true);
+
+    const { token } = await fetchToken();
+
+    try {
+      if (type === "create") {
+        await createNewProject(form, session?.user?.id, token);
+
+        router.push("/");
+      }
+
+      if (type === "edit") {
+        await updateProject(form, project?.id as string, token);
+
+        router.push("/");
+      }
+    } catch (error) {
+      alert(
+        `Failed to ${
+          type === "create" ? "create" : "edit"
+        } a project. Try again!`
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <form onSubmit={handleFormSubmit} className="flexStart form">
