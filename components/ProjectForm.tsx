@@ -30,7 +30,27 @@ const ProjectForm = ({ type, session, project }: Props) => {
     setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
   };
 
-  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {};
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    if (!file.type.includes("image")) {
+      alert("Please upload an image!");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const result = reader.result as string;
+      handleStateChange("image", result);
+    };
+  };
 
   const handleFormSubmit = (e: FormEvent) => {};
 
@@ -99,7 +119,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
       />
 
       <div className="flexStart w-full">
-        {/* <Button
+        <Button
           title={
             submitting
               ? `${type === "create" ? "Creating" : "Editing"}`
@@ -108,7 +128,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
           type="submit"
           leftIcon={submitting ? "" : "/plus.svg"}
           submitting={submitting}
-        /> */}
+        />
       </div>
     </form>
   );
