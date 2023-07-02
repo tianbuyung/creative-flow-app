@@ -34,20 +34,6 @@ export const fetchToken = async () => {
   }
 };
 
-export const uploadImage = async (imagePath: string) => {
-  try {
-    const response = await fetch(`${serverUrl}/api/upload`, {
-      method: "POST",
-      body: JSON.stringify({
-        path: imagePath,
-      }),
-    });
-    return response.json();
-  } catch (err) {
-    throw err;
-  }
-};
-
 const makeGraphQLRequest = async (query: string, variables = {}) => {
   try {
     return await client.request(query, variables);
@@ -63,6 +49,20 @@ export const fetchAllProjects = (
   client.setHeader("x-api-key", apiKey);
 
   return makeGraphQLRequest(projectsQuery, { category, endcursor });
+};
+
+export const uploadImage = async (imagePath: string) => {
+  try {
+    const response = await fetch(`${serverUrl}/api/upload`, {
+      method: "POST",
+      body: JSON.stringify({
+        path: imagePath,
+      }),
+    });
+    return response.json();
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const createNewProject = async (
