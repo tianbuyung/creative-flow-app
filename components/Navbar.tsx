@@ -3,9 +3,11 @@ import Image from "next/image";
 
 import { NavLinks } from "@/constants";
 import AuthProviders from "./AuthProviders";
+import { getCurrentUser } from "@/lib/session";
+import ProfileMenu from "./ProfileMenu";
 
-const Navbar = () => {
-  const session = {};
+const Navbar = async () => {
+  const session = await getCurrentUser();
 
   return (
     <nav className="flexBetween navbar">
@@ -23,19 +25,18 @@ const Navbar = () => {
 
         <ul className="xl:flex hidden text-sm gap-7">
           {NavLinks.map((link) => (
-            <li>
-              <Link href={link.href} key={link.key}>
-                {link.text}
-              </Link>
+            <li key={link.key}>
+              <Link href={link.href}>{link.text}</Link>
             </li>
           ))}
         </ul>
       </div>
 
       <div className="flexCenter gap-4">
-        {session ? (
+        {session?.user ? (
           <>
-            User Photo
+            <ProfileMenu session={session} />
+
             <Link href="/create-project">Share Work</Link>
           </>
         ) : (
