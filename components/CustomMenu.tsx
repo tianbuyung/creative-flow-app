@@ -26,6 +26,7 @@ const CustomMenu = ({ title, state, filters, setState }: Props) => {
               width={10}
               height={5}
               alt="arrow down"
+              className="h-auto w-auto"
             />
           </Menu.Button>
         </div>

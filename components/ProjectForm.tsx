@@ -89,7 +89,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
     <form onSubmit={handleFormSubmit} className="flexStart form">
       <div className="flexStart form_image-container">
         <label htmlFor="poster" className="flexCenter form_image-label">
-          {!form.image && "Choose a poster for your project"}
+          {!form?.image && "Choose a poster for your project"}
         </label>
 
         <input
@@ -101,7 +101,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
           onChange={(e) => handleChangeImage(e)}
         />
 
-        {form.image && (
+        {form?.image && (
           <Image
             src={form?.image}
             className="sm:p-10 object-contain z-20"
