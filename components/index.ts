@@ -12,6 +12,7 @@ import RelatedProjects from "./RelatedProjects";
 import ProjectActions from "./ProjectActions";
 import Categories from "./Categories";
 import LoadMore from "./LoadMore";
+import ProfilePage from "./ProfilePage";
 
 export {
   Navbar,
@@ -28,4 +29,5 @@ export {
   ProjectActions,
   Categories,
   LoadMore,
+  ProfilePage,
 };
