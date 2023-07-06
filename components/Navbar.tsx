@@ -19,7 +19,7 @@ const Navbar = async () => {
             width={115}
             height={43}
             priority
-            className="h-auto w-auto"
+            className="h-auto"
           />
         </Link>
 
