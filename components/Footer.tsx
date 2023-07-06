@@ -27,11 +27,11 @@ const Footer = () => {
       <div className="flex flex-col gap-12 w-full">
         <div className="flex items-start flex-col">
           <Image
-            src="/logo-purple.svg"
+            src="/logo-blue.svg"
             width={115}
-            height={38}
+            height={43}
             alt="creative flow logo"
-            className="h-auto w-auto"
+            className="h-auto"
           />
 
           <p className="text-start text-sm font-normal mt-5 max-w-xs">
